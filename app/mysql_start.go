@@ -22,7 +22,13 @@ func InitMySQL() {
 }
 
 func AutoMigrate() {
-	err := model.MyDB.Sync2(new(model.PlayerWallet))
+
+	err := model.MyDB.Sync2(new(model.Player))
+	if err != nil {
+		log.Fatalln("Player Sync Error:", err)
+	}
+
+	err = model.MyDB.Sync2(new(model.PlayerWallet))
 	if err != nil {
 		log.Fatalln("PlayerWallet Sync Error:", err)
 	}

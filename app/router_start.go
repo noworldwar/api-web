@@ -21,19 +21,6 @@ func InitRouter() {
 	// 頁面
 	r.HTMLRender = loadTemplates()
 
-	// player
-	r.GET("/", ctr.Index)
-	r.GET("/login", ctr.Login)
-	r.GET("/logout", ctr.Logout)
-	r.GET("/register", ctr.Register)
-	r.POST("/login", ctr.LoginRequest)
-	r.POST("/register", ctr.RegisterRequest)
-
-	// game
-	r.GET("/pgsoft", ctr.PGSoft)
-	r.GET("/livegame", ctr.LiveGame)
-	r.GET("/wglobby", ctr.WGLobby)
-
 	// wallet
 	r.POST("/validate", ctr.Validate)
 	r.POST("/balance", ctr.WalletBalance)
@@ -41,7 +28,7 @@ func InitRouter() {
 	r.POST("/credit", ctr.WalletCredit)
 	r.POST("/rollback", ctr.Rollback)
 
-	model.WGServer = http.Server{Addr: ":80", Handler: r}
+	model.WGServer = http.Server{Addr: ":7531", Handler: r}
 }
 
 func RunRouter() {
