@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +18,7 @@ func Validate(c *gin.Context) {
 		"test":     false,
 		"time":     time.Now().Unix(),
 	})
-
+	fmt.Println("Validate")
 	return
 }
 
@@ -28,7 +29,7 @@ func WalletBalance(c *gin.Context) {
 		"currency": "RMB",
 		"time":     time.Now().Unix(),
 	})
-
+	fmt.Println("WalletBalance")
 	return
 }
 
@@ -39,7 +40,7 @@ func WalletDebit(c *gin.Context) {
 		"currency": "RMB",
 		"time":     time.Now().Unix(),
 	})
-
+	fmt.Println("WalletDebit")
 	return
 }
 
@@ -50,7 +51,7 @@ func WalletCredit(c *gin.Context) {
 		"currency": "RMB",
 		"time":     time.Now().Unix(),
 	})
-
+	fmt.Println("WalletCredit")
 	return
 }
 
