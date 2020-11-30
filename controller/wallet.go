@@ -11,7 +11,7 @@ func Validate(c *gin.Context) {
 	// operatorId := "kkc"
 	// appSecret := "buucl6eikmobttvpdaa0"
 	c.JSON(200, gin.H{
-		"playerID": "mike",
+		"playerID": "kkc",
 		"nickName": "mike",
 		"time":     time.Now().Unix(),
 	})
