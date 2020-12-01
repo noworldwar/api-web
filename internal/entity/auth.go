@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/noworldwar/api-web/model"
+	"github.com/noworldwar/api-web/internal/model"
 )
 
 func SetAuth(token string, in *model.Player) error {

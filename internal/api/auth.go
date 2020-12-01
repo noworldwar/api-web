@@ -1,8 +1,8 @@
-package controller
+package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/noworldwar/api-web/entity"
+	"github.com/noworldwar/api-web/internal/entity"
 )
 
 func CheckToken() gin.HandlerFunc {

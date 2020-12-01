@@ -1,0 +1,22 @@
+{
+    "Title": "API 文件",
+    "Version": "v 1.1",
+    "Menu": [
+        {
+            "Name": "快速開始",
+            "Link": "/doc?lang=zh"
+        },
+        {
+            "Name": "作業流程",
+            "Link": "/doc/workflow?lang=zh"
+        },
+        {
+            "Name": "API 文件",
+            "Link": "/doc/integration?lang=zh"
+        },
+        {
+            "Name": "文件版本歷程",
+            "Link": "/doc/history?lang=zh"
+        }
+    ]
+}

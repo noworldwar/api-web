@@ -1,0 +1,55 @@
+{{define "content"}}
+
+<h2 style="margin: 10px;">作業流程</h2>
+<hr>
+
+<ul>
+    <li>
+        <h3>开启游戏</h3>
+        <img src="/static/images/launchgame_cn.jpg" style="max-width: 600px;width: 90%;">
+        <ul>
+            <li>
+                <h5><b>附注：1</b></h5>
+                游戏网址格式：
+                <br>
+                https://<b>{游戏平台网址}</b>?token=<b>{WE生成的令牌}</b>&gameid=<b>{游戏代码}</b>&lang=<b>{游戏中语言}</b>&playmode=<b>{游戏模式}</b>
+                <br>
+                <br>
+                真实模式范本：
+                <br>
+                https://www.gameserver.com?token=abcdef123456&gameid=1&lang=en&playmode=real
+                <br>
+                <br>
+                试玩模式范本：
+                <br>
+                https://www.gameserver.com?gameid=1&lang=en&playmode=demo
+                <br>
+                <br>
+            </li>
+        </ul>
+        <br>
+    </li>
+    <li>
+        <h3>执行游戏动作</h3>
+        <img src="/static/images/transaction_cn.jpg" style="max-width: 600px;width: 90%;">
+        <ul>
+            <li>
+                <h5><b>附注：2</b></h5>
+                当令牌过期时，请参考下列流程:
+                <br>
+                1. WE确认注单正常时，会派彩给玩家并且回应tokenExpired=true
+                <br>
+                2. 请游戏商平台将玩家踢出游戏，并显示请重新登入
+                <br>
+                <br>
+            </li>
+        </ul>
+        <br>
+    </li>
+    <li>
+        <h3>取消下注</h3>
+        <img src="/static/images/rollback_cn.jpg" style="max-width: 600px;width: 90%;">
+    </li>
+</ul>
+
+{{end}}

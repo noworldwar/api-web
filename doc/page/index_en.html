@@ -1,0 +1,74 @@
+{{define "content"}}
+
+<!-- <h3>步驟二. 對接API</h3> -->
+<h1 style="margin: 9px 6px;">Quick start</h1>
+<hr>
+<ul>
+
+    <li>
+        <h3>Step 1　Get game provider information</h3>
+        Related information provided by WE platform :
+        <br><br>
+        <ul>
+            <li>gpID</li>
+            <li>appSecret</li>
+        </ul>
+    </li>
+    <br>
+    <hr>
+    <li>
+        <h3>Step 2　Validate player information from game provider</h3>
+        Validate the player token provided by WE platform:
+        <br>
+        <br> Use
+        <span class="ui-accordion-method">POST</span> method to call "/validate", verification information provided by
+        the WE platform is required, API will return player information when success.
+        <br><br>
+        ※ Content-Type:multipart/form-data, application/x-www-form-urlencoded is supported
+    </li>
+    <br>
+    <hr>
+    <li>
+        <h3>Step 3　API file instructions</h3>
+        <ul>
+            <li>
+                <h4>Request</h4>
+                <img src="/static/images/api_information.jpg" alt="" width="80%" height="80%"
+                    style="border:3px solid #28a745">
+                <br><br>
+                <h6>Description : </h6>
+                <ol start="1">
+                    <li>Method</li>
+                    <li>Path</li>
+                    <li>Name</li>
+                    <li>Explanation</li>
+                    <li>Request & Response Tab</li>
+                    <li>Type</li>
+                    <li>Param Key</li>
+                    <li>Param Type</li>
+                    <li>Is Required</li>
+                    <li>Description</li>
+                </ol>
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li>
+                <h4>Response</h4>
+                <img src="/static/images/api_information_resopnse.jpg" alt="" width="80%" height="80%"
+                    style="border:3px solid #28a745">
+                <br><br>
+                <h6>Description : </h6>
+                <ol start="1">
+                    <li>Status Code</li>
+                    <li>Return Value</li>
+                </ol>
+            </li>
+        </ul>
+
+    </li>
+    <br>
+
+</ul>
+
+{{end}}

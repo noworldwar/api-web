@@ -1,0 +1,125 @@
+{
+    "Tag": {
+        "Wallet": "Wallet"
+    },
+    "FuncName": {
+        "Validate": "Verification token",
+        "WalletBalance": "Wallet Balance",
+        "WalletDebit": "Wallet Debit",
+        "WalletCredit": "Wallet Credit",
+        "Rollback": "Rollback"
+    },
+    "Explanation": {
+        "Validate": "When the player starts the game, the game provider must verify the token sent by the WE platform",
+        "WalletBalance": "Get Balance API: Get player's latest balance from the WE platform ",
+        "WalletDebit": "Deduct Balance API: When player bets, free bets, the WE platform transfers the amount to the game provider's temporary wallet",
+        "WalletCredit": "Deposit Balance API: When the player wins, the game provider's temporary wallet is transferred out to the WE platform",
+        "Rollback": "Cancel Betting Transaction API: When an exception occurs in the game (Not applicable after giving back the payoff)"
+    },
+    "Validate": {
+        "Requests": {
+            "Bodys": {
+                "token": "token",
+                "gpID": "gpID provided by WE platform",
+                "appSecret": "Secret Key"
+            }
+        },
+        "Responses": {
+            "200": "Success",
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "403": "Token Expired",
+            "404": "Player Not Found",
+            "500": "Internal Server Error"
+        }
+    },
+    "WalletBalance": {
+        "Requests": {
+            "Bodys": {
+                "token": "token",
+                "gpID": "gpID provided by WE platform",
+                "appSecret": "Secret Key",
+                "playerID": "Player ID"
+            }
+        },
+        "Responses": {
+            "200": "Success",
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "403": "Token Expired",
+            "404": "Player Not Found",
+            "500": "Internal Server Error"
+        }
+    },
+    "WalletDebit": {
+        "Requests": {
+            "Bodys": {
+                "token": "token",
+                "gpID": "gpID provided by WE platform",
+                "appSecret": "Secret Key",
+                "playerID": "Player ID",
+                "gameID": "Game ID",
+                "parentBetID": "Parent Bet ID",
+                "betID": "Bet ID",
+                "betType": "Bet Type (1:bet 2:free bet 3:transfer in)",
+                "amount": "Amount (cent)"
+            }
+        },
+        "Responses": {
+            "200": "Success",
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "402": "Insufficient Balance",
+            "403": "Token Expired",
+            "404": "Player Not Found",
+            "409": "Duplicate Transaction",
+            "500": "Internal Server Error"
+        }
+    },
+    "WalletCredit": {
+        "Requests": {
+            "Bodys": {
+                "token": "token",
+                "gpID": "gpID provided by WE platform",
+                "appSecret": "Secret Key",
+                "playerID": "Player ID",
+                "gameID": "Game ID",
+                "betID": "Bet ID",
+                "txID": "Transaction ID",
+                "txType": "Transaction Type (1:win 2:transfer out)",
+                "amount": "Amount (cent)",
+                "details": "Detailed game results"
+            }
+        },
+        "Responses": {
+            "200": "Success",
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "404": "BetID Not Found",
+            "409": "Duplicate Transaction",
+            "410": "BetID Already Paid",
+            "500": "Internal Server Error"
+        }
+    },
+    "Rollback": {
+        "Requests": {
+            "Bodys": {
+                "gpID": "gpID provided by WE platform",
+                "appSecret": "Secret Key",
+                "playerID": "Player ID",
+                "betID": "Bet ID",
+                "txID": "Transaction ID",
+                "amount": "Amount (cent)"
+            }
+        },
+        "Responses": {
+            "200": "Success",
+            "400": "Bad Request",
+            "401": "Unauthorized",
+            "404": "BetID Not Found",
+            "409": "Duplicate Transaction",
+            "410": "Can't cancel",
+            "500": "Internal Server Error"
+        }
+    }
+}

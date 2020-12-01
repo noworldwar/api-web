@@ -1,0 +1,157 @@
+{{define "content"}}
+
+<script type="text/javascript">
+    function BeautifyJSON(text) {
+        text = text.replace(/ |　/g, '');
+        if (text == "{}") return text;
+
+        text = text.replace(/{"/g, "{\r\n<div class='rsp-data-div'><span class='rsp-data-name'>\"");
+        text = text.replace(/}/g, "</div>}");
+        text = text.replace(/,/g, ",\r\n<span class='rsp-data-name'>");
+        text = text.replace(/":/g, "\"</span>: ");
+
+        text = text.replace(/ string/g, " <span class='rsp-data-value'>string</span>");
+        text = text.replace(/ bigint/g, " <span class='rsp-data-value'>bigint</span>");
+        text = text.replace(/ int/g, " <span class='rsp-data-value'>int</span>");
+        text = text.replace(/ bool/g, " <span class='rsp-data-value'>bool</span>");
+
+        return text;
+    }
+</script>
+
+<br>
+
+<div>
+
+    <!-- group tab -->
+    <ul class="nav nav-tabs n-tabs" id="myTab" role="tablist">
+        {{ range $tag_key, $tag := .Tag }}
+        <li class="nav-item n-tab">
+            <a class="nav-link" id="tab-{{ $tag_key }}" data-toggle="tab" href="#panel-{{ $tag_key }}" role="tab"
+                aria-controls="{{ $tag_key }}">{{ $tag.Name }}</a>
+        </li>
+        {{ end }}
+    </ul>
+
+    <div class="tab-content">
+
+        {{ range $tag_key, $tag := .Tag }}
+
+        <script type="text/javascript">
+            $(function () {
+                $("#panel-{{ $tag_key }}").accordion({ collapsible: true, active: false, animate: 0, heightStyle: "content" });
+            });
+        </script>
+
+
+        <div class="tab-pane n-tab-panel" id="panel-{{ $tag_key }}" role="tabpanel"
+            aria-labelledby="tab-{{ $tag_key }}">
+
+            {{ range $apidata := $tag.Funcs }}
+
+            <!-- method header -->
+
+            <div>
+
+                <div>
+                    <span class="ui-accordion-method ui-method-{{ $apidata.Method }}">{{ $apidata.Method }}</span>
+                    <span class="ui-accordion-Path">{{ $apidata.Path }}</span>
+                    <div class="d-block d-sm-none">
+                    </div>
+                    <span class="ui-accordion-Description">{{ $apidata.Description }}</span>
+                </div>
+
+            </div>
+
+            <div>
+
+                <div style="margin-bottom: 15px;">
+                    <b>{{ $apidata.Explanation }}</b>
+                </div>
+
+                <!-- method tab -->
+                <ul class="nav nav-tabs n-tabs" id="myTab" role="tablist">
+                    <li class="nav-item n-tab">
+                        <a class="nav-link" id="tab-request-{{ $apidata.FuncName }}" data-toggle="tab"
+                            href="#panel-request-{{ $apidata.FuncName }}" role="tab"
+                            aria-controls="request-{{ $apidata.FuncName }}">request</a>
+                    </li>
+                    <li class="nav-item n-tab">
+                        <a class="nav-link" id="tab-response-{{ $apidata.FuncName }}" data-toggle="tab"
+                            href="#panel-response-{{ $apidata.FuncName }}" role="tab"
+                            aria-controls="response-{{ $apidata.FuncName }}">response</a>
+                    </li>
+                </ul>
+
+                <!-- method content -->
+                <div class="tab-content">
+                    <!-- method request -->
+                    <div class="tab-pane n-tab-panel" id="panel-request-{{ $apidata.FuncName }}" role="tabpanel"
+                        aria-labelledby="tab-request-{{ $apidata.FuncName }}">
+                        {{ range $req := $apidata.Requests }}
+                        <div class="req-area">
+                            {{ $req.Area }}
+                        </div>
+                        <div class="req-paramet">
+                            {{ range $reqparamet := $req.Body }}
+                            <div class="row">
+                                <div class="col-sm-2 col-4">
+                                    {{ $reqparamet.Name }}
+                                </div>
+                                <div class="col-sm-2 col-4">
+                                    {{ $reqparamet.Type }}
+                                </div>
+                                <div class="col-sm-2 col-4 req-paramet-required">
+                                    {{ if $reqparamet.Required }}
+                                    <span>*Required</span>
+                                    {{ end }}
+                                </div>
+                                <div class="col-sm-6 col-12 req-paramet-description">
+                                    {{ $reqparamet.Description }}
+                                </div>
+                                <div class="d-block d-sm-none" style="margin-bottom: 30px;">
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                    <!-- method response -->
+                    <div class="tab-pane n-tab-panel" id="panel-response-{{ $apidata.FuncName }}" role="tabpanel"
+                        aria-labelledby="tab-response-{{ $apidata.FuncName }}">
+                        {{ range $resp := $apidata.Responses }}
+                        <div class="rsp-state">
+                            <b>{{ $resp.StateCode }}</b> : {{ $resp.Description }}
+                        </div>
+                        {{ if $resp.Message }}
+                        <pre id="{{ $apidata.FuncName }}-{{ $resp.StateCode }}" class="rsp-message"></pre>
+                        <script type="text/javascript">
+                            $("#{{ $apidata.FuncName }}-{{ $resp.StateCode }}").html(BeautifyJSON("{{ $resp.Message }}"));
+                        </script>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+
+                <script>
+                    $('#tab-request-{{ $apidata.FuncName }}').click();
+                </script>
+
+
+            </div>
+
+            {{ end }}
+
+        </div>
+        {{ end }}
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#tab-0').click();
+    })
+</script>
+
+{{end}}

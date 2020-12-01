@@ -1,0 +1,22 @@
+{
+    "Title": "API Doc",
+    "Version": "v 1.1",
+    "Menu": [
+        {
+            "Name": "Quick start",
+            "Link": "/doc?lang=en"
+        },
+        {
+            "Name": "Work flow",
+            "Link": "/doc/workflow?lang=en"
+        },
+        {
+            "Name": "API Doc",
+            "Link": "/doc/integration?lang=en"
+        },
+        {
+            "Name": "Doc Version History",
+            "Link": "/doc/history?lang=en"
+        }
+    ]
+}

@@ -1,0 +1,140 @@
+{
+    "Tag": {
+        "Wallet": "錢包"
+    },
+    "FuncName": {
+        "Validate": "驗證令牌",
+        "WalletBalance": "錢包餘額",
+        "WalletDebit": "下注",
+        "WalletCredit": "派彩",
+        "Rollback": "取消下注"
+    },
+    "Explanation": {
+        "Validate": "啟動遊戲時，遊戲商需驗證WE平台傳送之玩家令牌",
+        "WalletBalance": "取得餘額API：取得WE平台玩家最新錢包之餘額",
+        "WalletDebit": "扣除餘額API：當玩家下注、免費遊戲、WE平台轉入金額至遊戲商臨時錢包",
+        "WalletCredit": "增加餘額API：當玩家贏錢、遊戲商臨時錢包轉出至WE平台",
+        "Rollback": "取消下注交易API：當遊戲發生異常情況時(已派彩的不適用)"
+    },
+    "Validate": {
+        "Requests": {
+            "Headers": {
+                "signature": "驗簽 base64(appSecret+gpID)"
+            },
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的遊戲商編號",
+                "appSecret": "憑證"
+            }
+        },
+        "Responses": {
+            "200": "成功 signature=base64(playerID+nickname+currency+test+time)",
+            "400": "非法請求",
+            "401": "憑證錯誤",
+            "403": "令牌無效",
+            "404": "玩家不存在",
+            "500": "內部錯誤"
+        }
+    },
+    "WalletBalance": {
+        "Requests": {
+            "Headers": {
+                "signature": "驗簽 base64(appSecret+gpID)"
+            },
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的遊戲商編號",
+                "appSecret": "憑證",
+                "playerID": "玩家ID"
+            }
+        },
+        "Responses": {
+            "200": "成功 signature=base64(balance+currency+time)",
+            "400": "非法請求",
+            "401": "憑證錯誤",
+            "403": "令牌無效",
+            "404": "玩家不存在",
+            "500": "內部錯誤"
+        }
+    },
+    "WalletDebit": {
+        "Requests": {
+            "Headers": {
+                "signature": "驗簽 base64(appSecret+gpID)"
+            },
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的遊戲商編號",
+                "appSecret": "憑證",
+                "playerID": "玩家ID",
+                "gameID": "遊戲ID",
+                "parentBetID": "父注單ID",
+                "betID": "注單ID",
+                "betType": "下注類型 (1:下注 2:免費遊戲 3:轉入遊戲)",
+                "amount": "金額 (單位:分)"
+            }
+        },
+        "Responses": {
+            "200": "成功 signature=base64(balance+currency+time+transferID)",
+            "400": "非法請求",
+            "401": "憑證錯誤",
+            "402": "玩家餘額不足",
+            "403": "令牌無效",
+            "404": "玩家不存在",
+            "409": "重複交易",
+            "500": "內部錯誤"
+        }
+    },
+    "WalletCredit": {
+        "Requests": {
+            "Headers": {
+                "signature": "驗簽 base64(appSecret+gpID) (APPSECRET+GPID)"
+            },
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的遊戲商編號",
+                "appSecret": "憑證",
+                "playerID": "玩家ID",
+                "gameID": "遊戲ID",
+                "betID": "注單ID",
+                "txID": "交易ID",
+                "txType": "交易類型 (1:派彩 2:轉出遊戲)",
+                "amount": "金額 (單位:分)",
+                "details": "詳細的遊戲結果"
+            }
+        },
+        "Responses": {
+            "200": "成功 signature=base64(balance+currency+time+tokenExpired+refID)",
+            "400": "非法請求",
+            "401": "憑證錯誤",
+            "404": "注單不存在",
+            "409": "重複交易",
+            "410": "注單已派彩",
+            "500": "內部錯誤"
+        }
+    },
+    "Rollback": {
+        "Requests": {
+            "Headers": {
+                "signature": "驗簽 base64(appSecret+gpID)"
+            },
+            "Bodys": {
+                "gpID": "WE平台提供的遊戲商編號",
+                "appSecret": "憑證",
+                "playerID": "玩家ID",
+                "betID": "注單ID",
+                "txID": "交易ID",
+                "amount": "金額 (單位:分)"
+            }
+        },
+        "Responses": {
+            "200": "令牌 signature=base64(balance+currency+time+refID)",
+            "400": "非法請求",
+            "401": "憑證錯誤",
+            "404": "注單不存在",
+            "409": "重複交易",
+            "410": "已派彩不能取消",
+            "500": "內部錯誤"
+        }
+    }
+}

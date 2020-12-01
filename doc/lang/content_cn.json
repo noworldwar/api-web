@@ -1,0 +1,125 @@
+{
+    "Tag": {
+        "Wallet": "钱包"
+    },
+    "FuncName": {
+        "Validate": "验证令牌",
+        "WalletBalance": "钱包余额",
+        "WalletDebit": "下注",
+        "WalletCredit": "派彩",
+        "Rollback": "取消下注"
+    },
+    "Explanation": {
+        "Validate": "启动游戏时，游戏商需验证WE平台传送之玩家令牌",
+        "WalletBalance": "取得余额API：取得WE平台玩家最新钱包之余额",
+        "WalletDebit": "扣除余额API：当玩家下注、免费游戏、WE平台转入金额至游戏商临时钱包",
+        "WalletCredit": "增加余额API：当玩家赢钱，游戏商临时钱包转出至WE平台",
+        "Rollback": "取消下注交易API：当游戏发生异常情况时(已派彩的不适用)"
+    },
+    "Validate": {
+        "Requests": {
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的游戏商编号",
+                "appSecret": "凭证"
+            }
+        },
+        "Responses": {
+            "200": "成功",
+            "400": "非法请求",
+            "401": "凭证错误",
+            "403": "令牌无效",
+            "404": "玩家不存在",
+            "500": "内部错误"
+        }
+    },
+    "WalletBalance": {
+        "Requests": {
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的游戏商编号",
+                "appSecret": "凭证",
+                "playerID": "玩家ID"
+            }
+        },
+        "Responses": {
+            "200": "成功",
+            "400": "非法请求",
+            "401": "凭证错误",
+            "403": "令牌无效",
+            "404": "玩家不存在",
+            "500": "内部错误"
+        }
+    },
+    "WalletDebit": {
+        "Requests": {
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的游戏商编号",
+                "appSecret": "凭证",
+                "playerID": "玩家ID",
+                "gameID": "游戏ID",
+                "parentBetID": "父注单ID",
+                "betID": "注单ID",
+                "betType": "下注类型 (1:下注 2:免费游戏 3:转入游戏)",
+                "amount": "金额 (单位:分)"
+            }
+        },
+        "Responses": {
+            "200": "成功",
+            "400": "非法请求",
+            "401": "凭证错误",
+            "402": "玩家剩余不足",
+            "403": "令牌无效",
+            "404": "玩家不存在",
+            "409": "重复交易",
+            "500": "内部错误"
+        }
+    },
+    "WalletCredit": {
+        "Requests": {
+            "Bodys": {
+                "token": "令牌",
+                "gpID": "WE平台提供的游戏商编号",
+                "appSecret": "凭证",
+                "playerID": "Player ID",
+                "gameID": "游戏ID",
+                "betID": "注单ID",
+                "txID": "交易ID",
+                "txType": "交易类型 (1:派彩 2:转出游戏)",
+                "amount": "金额 (单位:分)",
+                "details": "详细的游戏结果"
+            }
+        },
+        "Responses": {
+            "200": "成功",
+            "400": "非法请求",
+            "401": "凭证错误",
+            "404": "注单不存在",
+            "409": "重复交易",
+            "410": "注单已派彩",
+            "500": "内部错误"
+        }
+    },
+    "Rollback": {
+        "Requests": {
+            "Bodys": {
+                "gpID": "WE平台提供的游戏商编号",
+                "appSecret": "凭证",
+                "playerID": "玩家ID",
+                "betID": "注单ID",
+                "txID": "交易ID",
+                "amount": "金额 (单位:分)"
+            }
+        },
+        "Responses": {
+            "200": "令牌",
+            "400": "非法请求",
+            "401": "凭证错误",
+            "404": "注单不存在",
+            "409": "重复交易",
+            "410": "已派彩不能取消",
+            "500": "内部错误"
+        }
+    }
+}

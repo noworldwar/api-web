@@ -1,0 +1,73 @@
+{{define "content"}}
+
+<!-- <h3>步骤二. 对接API</h3> -->
+<h2 style="margin: 9px 6px;">快速开始</h2>
+<hr>
+<ul>
+
+    <li>
+        <h3>步骤一　取得游戏商资讯</h3>
+        由WE平台提供的相关资讯 :
+        <br><br>
+        <ul>
+            <li>gpID 游戏商ID</li>
+            <li>appSecret 凭证金钥</li>
+        </ul>
+    </li>
+    <br>
+    <hr>
+    <li>
+        <h3>步骤二　验证游戏商玩家资讯</h3>
+        验证WE平台提供的玩家token:
+        <br>
+        <br> 使用
+        <span class="ui-accordion-method">POST</span>方法呼叫 /validate，需要带入WE平台提供的凭证资讯，成功时回传玩家资讯。
+        <br><br>
+        ※ 支援Content-Type:multipart/form-data, application/x-www-form-urlencoded
+    </li>
+    <br>
+    <hr>
+    <li>
+        <h3>步骤三　API文件使用说明</h3>
+        <ul>
+            <li>
+                <h4>请求</h4>
+                <img src="/static/images/api_information.jpg" alt="" width="80%" height="80%"
+                    style="border:3px solid #28a745">
+                <br><br>
+                <h6>说明 : </h6>
+                <ol start="1">
+                    <li>方法</li>
+                    <li>路径</li>
+                    <li>名称</li>
+                    <li>解释</li>
+                    <li>请求以及回应</li>
+                    <li>类型</li>
+                    <li>参数名称</li>
+                    <li>参数型别</li>
+                    <li>是否必填</li>
+                    <li>描述</li>
+                </ol>
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li>
+                <h4>回应</h4>
+                <img src="/static/images/api_information_resopnse.jpg" alt="" width="80%" height="80%"
+                    style="border:3px solid #28a745">
+                <br><br>
+                <h6>说明 : </h6>
+                <ol start="1">
+                    <li>状态码</li>
+                    <li>JSON回传值</li>
+                </ol>
+            </li>
+        </ul>
+
+    </li>
+    <br>
+
+</ul>
+
+{{end}}

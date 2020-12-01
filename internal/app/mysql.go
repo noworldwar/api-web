@@ -5,7 +5,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-xorm/xorm"
-	"github.com/noworldwar/api-web/model"
+	"github.com/noworldwar/api-web/internal/model"
 	"xorm.io/core"
 )
 
@@ -28,8 +28,4 @@ func AutoMigrate() {
 		log.Fatalln("Player Sync Error:", err)
 	}
 
-	err = model.MyDB.Sync2(new(model.PlayerWallet))
-	if err != nil {
-		log.Fatalln("PlayerWallet Sync Error:", err)
-	}
 }

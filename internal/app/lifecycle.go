@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/noworldwar/api-web/model"
+	"github.com/noworldwar/api-web/internal/model"
 )
 
 func Cleanup() {
