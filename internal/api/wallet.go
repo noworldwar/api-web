@@ -25,8 +25,8 @@ import (
 func Validate(c *gin.Context) {
 
 	token := c.PostForm("token")
-	// operatorID := c.PostForm("operatorID")
-	// appSecret := c.PostForm("appSecret")
+	operatorID := c.PostForm("operatorID")
+	appSecret := c.PostForm("appSecret")
 
 	// Step 1: Check the required parameters
 	if missing := utils.CheckPostFormData(c, "token", "operatorID", "appSecret"); missing != "" {
@@ -38,12 +38,14 @@ func Validate(c *gin.Context) {
 	if err != nil || player.PlayerID == "" {
 		utils.ErrorResponse(c, 500, "Get Player Failed", err)
 	} else {
+		signatureRsp := utils.GenerateSignature(appSecret + operatorID)
 		c.JSON(200, gin.H{
-			"currency": "RMB",
-			"playerID": player.PlayerID,
-			"nickname": player.NickName,
-			"test":     false,
-			"time":     time.Now().Unix(),
+			"currency":  "RMB",
+			"playerID":  player.PlayerID,
+			"nickname":  player.NickName,
+			"test":      false,
+			"signature": signatureRsp,
+			"time":      time.Now().Unix(),
 		})
 	}
 	// operatorId := "kkc"
@@ -64,14 +66,24 @@ func Validate(c *gin.Context) {
 func WalletBalance(c *gin.Context) {
 
 	token := c.PostForm("token")
-	// operatorID := c.PostForm("operatorID")
-	// appSecret := c.PostForm("appSecret")
+	operatorID := c.PostForm("operatorID")
+	appSecret := c.PostForm("appSecret")
+	signature := c.GetHeader("signature")
 	// playerID := c.PostForm("playerID")
+
 	// Step 1: Check the required parameters
 	if missing := utils.CheckPostFormData(c, "token", "operatorID", "appSecret", "playerID"); missing != "" {
 		utils.ErrorResponse(c, 400, "Missing parameter: "+missing, nil)
 		return
 	}
+
+	// Step 2: Check Signature (400)
+	if err := utils.CheckSignature(signature, appSecret+operatorID); err != nil {
+		utils.ErrorResponse(c, 400, "Signature Incorrect", err)
+		return
+	}
+
+	// Step 3: Get Player Info
 	player, err := entity.GetPlayer(token)
 	if err != nil {
 		utils.ErrorResponse(c, 500, "Get Player Failed", err)
@@ -134,10 +146,22 @@ func Rollback(c *gin.Context) {
 
 func calWallet(c *gin.Context, calType string) {
 
+	operatorID := c.PostForm("operatorID")
+	appSecret := c.PostForm("appSecret")
+	signature := c.GetHeader("signature")
+
+	// Step 1: Check the required parameters
 	if missing := utils.CheckPostFormData(c, "token", "operatorID", "appSecret", "playerID", "amount"); missing != "" {
 		utils.ErrorResponse(c, 400, "Missing parameter: "+missing, nil)
 		return
 	}
+
+	// Step 2: Check Signature (400)
+	if err := utils.CheckSignature(signature, appSecret+operatorID); err != nil {
+		utils.ErrorResponse(c, 400, "Signature Incorrect", err)
+		return
+	}
+
 	amount, err := strconv.ParseInt(c.PostForm("amount"), 10, 64)
 	if err != nil {
 		utils.ErrorResponse(c, 400, "Something went wrong with data type", nil)
@@ -146,6 +170,7 @@ func calWallet(c *gin.Context, calType string) {
 		utils.ErrorResponse(c, 400, "The amount must not be less than zero", nil)
 		return
 	}
+
 	if calType == "debit" {
 		amount = -amount
 	}
